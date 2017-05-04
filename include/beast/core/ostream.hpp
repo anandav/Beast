@@ -27,9 +27,9 @@ namespace beast {
 
     @par Example
     @code
-        streambuf sb;
+        multi_buffer b;
         ...
-        std::cout << buffers(sb.data()) << std::endl;
+        std::cout << buffers(b.data()) << std::endl;
     @endcode
 
     @param b An object meeting the requirements of @b ConstBufferSequence
