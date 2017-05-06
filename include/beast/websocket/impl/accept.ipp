@@ -602,7 +602,7 @@ async_accept(AcceptHandler&& handler)
     reset();
     accept_op<decltype(&default_decorate_res),
         BEAST_HANDLER_TYPE(AcceptHandler, void(error_code))>{
-            init.handler, *this, &default_decorate_res};
+            init.completion_handler, *this, &default_decorate_res};
     return init.result.get();
 }
 
@@ -624,7 +624,7 @@ async_accept_ex(ResponseDecorator const& decorator,
     reset();
     accept_op<ResponseDecorator, BEAST_HANDLER_TYPE(
         AcceptHandler, void(error_code))>{
-            init.handler, *this, decorator};
+            init.completion_handler, *this, decorator};
     return init.result.get();
 }
 
@@ -646,7 +646,7 @@ async_accept(ConstBufferSequence const& buffers,
     reset();
     accept_op<decltype(&default_decorate_res),
         BEAST_HANDLER_TYPE(AcceptHandler, void(error_code))>{
-            init.handler, *this, buffers, &default_decorate_res};
+            init.completion_handler, *this, buffers, &default_decorate_res};
     return init.result.get();
 }
 
@@ -673,7 +673,7 @@ async_accept_ex(ConstBufferSequence const& buffers,
     reset();
     accept_op<ResponseDecorator, BEAST_HANDLER_TYPE(
         AcceptHandler, void(error_code))>{
-            init.handler, *this, buffers, decorator};
+            init.completion_handler, *this, buffers, decorator};
     return init.result.get();
 }
 
@@ -691,10 +691,10 @@ async_accept(http::header<true, Fields> const& req,
         void(error_code)> init{handler};
     reset();
     response_op<BEAST_HANDLER_TYPE(
-        AcceptHandler, void(error_code))>{init.handler,
+        AcceptHandler, void(error_code))>{init.completion_handler,
             *this, req, &default_decorate_res,
                 beast_asio_helpers::is_continuation(
-                    init.handler)};
+                    init.completion_handler)};
     return init.result.get();
 }
 
@@ -717,9 +717,9 @@ async_accept_ex(http::header<true, Fields> const& req,
     reset();
     response_op<BEAST_HANDLER_TYPE(
         AcceptHandler, void(error_code))>{
-            init.handler, *this, req, decorator,
+            init.completion_handler, *this, req, decorator,
                 beast_asio_helpers::is_continuation(
-                    init.handler)};
+                    init.completion_handler)};
     return init.result.get();
 }
 
@@ -743,9 +743,9 @@ async_accept(http::header<true, Fields> const& req,
     reset();
     response_op<BEAST_HANDLER_TYPE(
         AcceptHandler, void(error_code))>{
-            init.handler, *this, req, buffers,
+            init.completion_handler, *this, req, buffers,
                 &default_decorate_res, beast_asio_helpers::
-                    is_continuation(init.handler)};
+                    is_continuation(init.completion_handler)};
     return init.result.get();
 }
 
@@ -772,10 +772,10 @@ async_accept_ex(http::header<true, Fields> const& req,
         void(error_code)> init{handler};
     reset();
     response_op<BEAST_HANDLER_TYPE(
-        AcceptHandler, void(error_code))>{init.handler,
+        AcceptHandler, void(error_code))>{init.completion_handler,
             *this, req, buffers, decorator,
                 beast_asio_helpers::is_continuation(
-                    init.handler)};
+                    init.completion_handler)};
     return init.result.get();
 }
 

@@ -699,7 +699,7 @@ async_read_frame(frame_info& fi,
     async_completion<ReadHandler,
         void(error_code)> init{handler};
     read_frame_op<DynamicBuffer, BEAST_HANDLER_TYPE(
-        ReadHandler, void(error_code))>{init.handler,
+        ReadHandler, void(error_code))>{init.completion_handler,
             *this, fi, dynabuf};
     return init.result.get();
 }
@@ -1111,7 +1111,7 @@ async_read(opcode& op,
     async_completion<ReadHandler,
         void(error_code)> init{handler};
     read_op<DynamicBuffer, BEAST_HANDLER_TYPE(
-        ReadHandler, void(error_code))>{init.handler,
+        ReadHandler, void(error_code))>{init.completion_handler,
             *this, op, dynabuf};
     return init.result.get();
 }

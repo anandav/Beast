@@ -589,14 +589,14 @@ async_read_some(
         detail::read_some_buffer_op<AsyncReadStream,
             DynamicBuffer, isRequest, true, Derived, BEAST_HANDLER_TYPE(
                 ReadHandler, void(error_code, std::size_t))>{
-                    init.handler, stream, dynabuf, parser};
+                    init.completion_handler, stream, dynabuf, parser};
         break;
 
     default:
         detail::read_some_body_op<AsyncReadStream,
             DynamicBuffer, isRequest, Derived, BEAST_HANDLER_TYPE(
                 ReadHandler, void(error_code, std::size_t))>{
-                    init.handler, stream, dynabuf, parser};
+                    init.completion_handler, stream, dynabuf, parser};
         break;
     }
     return init.result.get();
@@ -621,7 +621,7 @@ async_read_some(
     detail::read_some_buffer_op<AsyncReadStream,
         DynamicBuffer, isRequest, false, Derived, BEAST_HANDLER_TYPE(
             ReadHandler, void(error_code, std::size_t))>{
-                init.handler, stream, dynabuf, parser};
+                init.completion_handler, stream, dynabuf, parser};
     return init.result.get();
 }
 
@@ -674,7 +674,7 @@ async_read(
     detail::parse_op<AsyncReadStream, DynamicBuffer,
         isRequest, isDirect, Derived, BEAST_HANDLER_TYPE(
             ReadHandler, void(error_code))>{
-                init.handler, stream, dynabuf, parser};
+                init.completion_handler, stream, dynabuf, parser};
     return init.result.get();
 }
 
@@ -707,7 +707,7 @@ async_read(
     detail::read_message_op<AsyncReadStream, DynamicBuffer,
         isRequest, Body, Fields, BEAST_HANDLER_TYPE(
             ReadHandler, void(error_code))>{
-                init.handler, stream, dynabuf, msg};
+                init.completion_handler, stream, dynabuf, msg};
     return init.result.get();
 }
 

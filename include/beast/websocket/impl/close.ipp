@@ -208,7 +208,7 @@ async_close(close_reason const& cr, CloseHandler&& handler)
         void(error_code)> init{handler};
     close_op<BEAST_HANDLER_TYPE(
         CloseHandler, void(error_code))>{
-            init.handler, *this, cr};
+            init.completion_handler, *this, cr};
     return init.result.get();
 }
 

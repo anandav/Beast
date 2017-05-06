@@ -232,7 +232,7 @@ async_write(AsyncWriteStream& stream,
     }
     detail::write_streambuf_op<AsyncWriteStream,
         BEAST_HANDLER_TYPE(WriteHandler, void(error_code))>{
-            init.handler, stream, std::move(b)};
+            init.completion_handler, stream, std::move(b)};
     return init.result.get();
 }
 
@@ -660,7 +660,7 @@ async_write(AsyncWriteStream& stream,
         void(error_code)> init{handler};
     detail::write_op<AsyncWriteStream, BEAST_HANDLER_TYPE(
         WriteHandler, void(error_code)), isRequest,
-            Body, Fields>{init.handler, stream, msg};
+            Body, Fields>{init.completion_handler, stream, msg};
     return init.result.get();
 }
 

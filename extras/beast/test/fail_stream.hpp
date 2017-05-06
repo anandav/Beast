@@ -114,7 +114,7 @@ public:
             async_completion<ReadHandler,
                 void(error_code, std::size_t)> init{handler};
             next_layer_.get_io_service().post(
-                bind_handler(init.handler, ec, 0));
+                bind_handler(init.completion_handler, ec, 0));
             return init.result.get();
         }
         return next_layer_.async_read_some(buffers,
@@ -150,7 +150,7 @@ public:
             async_completion<WriteHandler,
                 void(error_code, std::size_t)> init{handler};
             next_layer_.get_io_service().post(
-                bind_handler(init.handler, ec, 0));
+                bind_handler(init.completion_handler, ec, 0));
             return init.result.get();
         }
         return next_layer_.async_write_some(buffers,

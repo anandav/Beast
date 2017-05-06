@@ -559,7 +559,7 @@ async_write_frame(bool fin,
     async_completion<WriteHandler,
         void(error_code)> init{handler};
     write_frame_op<ConstBufferSequence, BEAST_HANDLER_TYPE(
-        WriteHandler, void(error_code))>{init.handler,
+        WriteHandler, void(error_code))>{init.completion_handler,
             *this, fin, bs};
     return init.result.get();
 }
@@ -909,7 +909,7 @@ async_write(ConstBufferSequence const& bs, WriteHandler&& handler)
         void(error_code)> init{handler};
     write_op<ConstBufferSequence, BEAST_HANDLER_TYPE(
         WriteHandler, void(error_code))>{
-            init.handler, *this, bs};
+            init.completion_handler, *this, bs};
     return init.result.get();
 }
 

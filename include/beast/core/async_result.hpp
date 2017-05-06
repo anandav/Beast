@@ -114,13 +114,13 @@ struct async_completion
 
         Objects of this type will be callable with the specified signature.
     */
-    using handler_type =
+    using completion_handler_type =
         typename boost::asio::handler_type<
             CompletionHandler, Signature>::type;
 
     /// The type of the value returned by the asynchronous initiation function.
     using result_type = typename
-        boost::asio::async_result<handler_type>::type;
+        boost::asio::async_result<completion_handler_type>::type;
 
     /** Construct the helper.
 
@@ -128,18 +128,20 @@ struct async_completion
         required. If `CompletionHandler` is movable, it may also be moved.
     */
     async_completion(typename std::remove_reference<CompletionHandler>::type& token)
-        : handler(std::forward<CompletionHandler>(token))
-        , result(handler)
+        : completion_handler(std::forward<CompletionHandler>(token))
+        , result(completion_handler)
     {
-        static_assert(is_CompletionHandler<handler_type, Signature>::value,
-            "Handler requirements not met");
+        // CompletionHandler is not invokable with the given signature
+        static_assert(is_CompletionHandler<
+                completion_handler_type, Signature>::value,
+            "CompletionHandler requirements not met (Signature mismatch)");
     }
 
     /// The final completion handler, callable with the specified signature.
-    handler_type handler;
+    completion_handler_type completion_handler;
 
     /// The return value of the asynchronous initiation function.
-    boost::asio::async_result<handler_type> result;
+    boost::asio::async_result<completion_handler_type> result;
 };
 
 /// @file

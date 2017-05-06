@@ -206,7 +206,7 @@ async_ping(ping_data const& payload, WriteHandler&& handler)
         void(error_code)> init{handler};
     ping_op<BEAST_HANDLER_TYPE(
         WriteHandler, void(error_code))>{
-            init.handler, *this, opcode::ping, payload};
+            init.completion_handler, *this, opcode::ping, payload};
     return init.result.get();
 }
 
@@ -223,7 +223,7 @@ async_pong(ping_data const& payload, WriteHandler&& handler)
         void(error_code)> init{handler};
     ping_op<BEAST_HANDLER_TYPE(
         WriteHandler, void(error_code))>{
-            init.handler, *this, opcode::pong, payload};
+            init.completion_handler, *this, opcode::pong, payload};
     return init.result.get();
 }
 

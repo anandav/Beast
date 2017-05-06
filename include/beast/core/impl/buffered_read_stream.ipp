@@ -241,7 +241,7 @@ async_read_some(MutableBufferSequence const& buffers,
         void(error_code, std::size_t)> init{handler};
     read_some_op<MutableBufferSequence, BEAST_HANDLER_TYPE(
         ReadHandler, void(error_code, std::size_t))>{
-            init.handler, *this, buffers};
+            init.completion_handler, *this, buffers};
     return init.result.get();
 }
 

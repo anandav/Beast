@@ -66,7 +66,7 @@ public:
     {
         async_completion<ReadHandler,
             void(error_code, std::size_t)> init{handler};
-        ios_.post(bind_handler(init.handler,
+        ios_.post(bind_handler(init.completion_handler,
             boost::asio::error::eof, 0));
         return init.result.get();
     }
@@ -108,7 +108,7 @@ public:
         async_completion<WriteHandler,
             void(error_code, std::size_t)> init{handler};
         get_io_service().post(
-            bind_handler(init.handler, ec, bytes_transferred));
+            bind_handler(init.completion_handler, ec, bytes_transferred));
         return init.result.get();
     }
 

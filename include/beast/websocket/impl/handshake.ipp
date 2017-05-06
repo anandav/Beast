@@ -173,7 +173,7 @@ async_handshake(string_view const& host,
         void(error_code)> init{handler};
     handshake_op<BEAST_HANDLER_TYPE(
         HandshakeHandler, void(error_code))>{
-            init.handler, *this, nullptr, host,
+            init.completion_handler, *this, nullptr, host,
                 target, &default_decorate_req};
     return init.result.get();
 }
@@ -194,7 +194,7 @@ async_handshake(response_type& res,
         void(error_code)> init{handler};
     handshake_op<BEAST_HANDLER_TYPE(
         HandshakeHandler, void(error_code))>{
-            init.handler, *this, &res, host,
+            init.completion_handler, *this, &res, host,
                 target, &default_decorate_req};
     return init.result.get();
 }
@@ -218,7 +218,7 @@ async_handshake_ex(string_view const& host,
         void(error_code)> init{handler};
     handshake_op<BEAST_HANDLER_TYPE(
         HandshakeHandler, void(error_code))>{
-            init.handler, *this, nullptr, host,
+            init.completion_handler, *this, nullptr, host,
                 target, decorator};
     return init.result.get();
 }
@@ -243,7 +243,7 @@ async_handshake_ex(response_type& res,
         void(error_code)> init{handler};
     handshake_op<BEAST_HANDLER_TYPE(
         HandshakeHandler, void(error_code))>{
-            init.handler, *this, &res, host,
+            init.completion_handler, *this, &res, host,
                 target, decorator};
     return init.result.get();
 }
