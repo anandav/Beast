@@ -196,11 +196,10 @@
             <member><link linkend="beast.ref.is_AsyncReadStream">is_AsyncReadStream</link></member>
             <member><link linkend="beast.ref.is_AsyncWriteStream">is_AsyncWriteStream</link></member>
             <member><link linkend="beast.ref.is_AsyncStream">is_AsyncStream</link></member>
-            <member><link linkend="beast.ref.is_BufferSequence">is_BufferSequence</link></member>
             <member><link linkend="beast.ref.is_CompletionHandler">is_CompletionHandler</link></member>
-            <member><link linkend="beast.ref.is_ConstBufferSequence">is_ConstBufferSequence</link></member>
-            <member><link linkend="beast.ref.is_DynamicBuffer">is_DynamicBuffer</link></member>
-            <member><link linkend="beast.ref.is_MutableBufferSequence">is_MutableBufferSequence</link></member>
+            <member><link linkend="beast.ref.is_const_buffer_sequence">is_const_buffer_sequence</link></member>
+            <member><link linkend="beast.ref.is_dynamic_buffer">is_dynamic_buffer</link></member>
+            <member><link linkend="beast.ref.is_mutable_buffer_sequence">is_mutable_buffer_sequence</link></member>
             <member><link linkend="beast.ref.is_SyncReadStream">is_SyncReadStream</link></member>
             <member><link linkend="beast.ref.is_SyncStream">is_SyncStream</link></member>
             <member><link linkend="beast.ref.is_SyncWriteStream">is_SyncWriteStream</link></member>

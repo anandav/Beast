@@ -694,7 +694,7 @@ async_read_frame(frame_info& fi,
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements requirements not met");
-    static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(beast::is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     async_completion<ReadHandler,
         void(error_code)> init{handler};
@@ -712,7 +712,7 @@ read_frame(frame_info& fi, DynamicBuffer& dynabuf)
 {
     static_assert(is_SyncStream<next_layer_type>::value,
         "SyncStream requirements not met");
-    static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(beast::is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     error_code ec;
     read_frame(fi, dynabuf, ec);
@@ -728,7 +728,7 @@ read_frame(frame_info& fi, DynamicBuffer& dynabuf, error_code& ec)
 {
     static_assert(is_SyncStream<next_layer_type>::value,
         "SyncStream requirements not met");
-    static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(beast::is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     using beast::detail::clamp;
     using boost::asio::buffer;
@@ -1106,7 +1106,7 @@ async_read(opcode& op,
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements requirements not met");
-    static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(beast::is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     async_completion<ReadHandler,
         void(error_code)> init{handler};
@@ -1124,7 +1124,7 @@ read(opcode& op, DynamicBuffer& dynabuf)
 {
     static_assert(is_SyncStream<next_layer_type>::value,
         "SyncStream requirements not met");
-    static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(beast::is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     error_code ec;
     read(op, dynabuf, ec);
@@ -1140,7 +1140,7 @@ read(opcode& op, DynamicBuffer& dynabuf, error_code& ec)
 {
     static_assert(is_SyncStream<next_layer_type>::value,
         "SyncStream requirements not met");
-    static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(beast::is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     frame_info fi;
     for(;;)

@@ -166,7 +166,7 @@ async_write_some(ConstBufferSequence const& buffers,
 {
     static_assert(is_AsyncWriteStream<next_layer_type>::value,
         "AsyncWriteStream requirements not met");
-    static_assert(is_ConstBufferSequence<
+    static_assert(is_const_buffer_sequence<
         ConstBufferSequence>::value,
             "ConstBufferSequence requirements not met");
     static_assert(is_CompletionHandler<WriteHandler,
@@ -185,7 +185,7 @@ read_some(
 {
     static_assert(is_SyncReadStream<next_layer_type>::value,
         "SyncReadStream requirements not met");
-    static_assert(is_MutableBufferSequence<
+    static_assert(is_mutable_buffer_sequence<
         MutableBufferSequence>::value,
             "MutableBufferSequence requirements not met");
     error_code ec;
@@ -204,7 +204,7 @@ read_some(MutableBufferSequence const& buffers,
 {
     static_assert(is_SyncReadStream<next_layer_type>::value,
         "SyncReadStream requirements not met");
-    static_assert(is_MutableBufferSequence<
+    static_assert(is_mutable_buffer_sequence<
         MutableBufferSequence>::value,
             "MutableBufferSequence requirements not met");
     using boost::asio::buffer_size;
@@ -234,7 +234,7 @@ async_read_some(MutableBufferSequence const& buffers,
 {
     static_assert(is_AsyncReadStream<next_layer_type>::value,
         "Stream requirements not met");
-    static_assert(is_MutableBufferSequence<
+    static_assert(is_mutable_buffer_sequence<
         MutableBufferSequence>::value,
             "MutableBufferSequence requirements not met");
     async_completion<ReadHandler,

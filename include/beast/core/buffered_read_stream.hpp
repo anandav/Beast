@@ -90,7 +90,7 @@ namespace beast {
 template<class Stream, class DynamicBuffer>
 class buffered_read_stream
 {
-    static_assert(is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
 
     template<class Buffers, class Handler>

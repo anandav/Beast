@@ -644,7 +644,7 @@ async_read_some(
 {
     static_assert(is_AsyncReadStream<AsyncReadStream>::value,
         "AsyncReadStream requirements not met");
-    static_assert(is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     BOOST_ASSERT(! parser.is_complete());
     return detail::async_read_some(stream, dynabuf, parser,
@@ -666,7 +666,7 @@ async_read(
 {
     static_assert(is_AsyncReadStream<AsyncReadStream>::value,
         "AsyncReadStream requirements not met");
-    static_assert(is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     BOOST_ASSERT(! parser.is_complete());
     async_completion<ReadHandler,
@@ -693,7 +693,7 @@ async_read(
 {
     static_assert(is_AsyncReadStream<AsyncReadStream>::value,
         "AsyncReadStream requirements not met");
-    static_assert(is_DynamicBuffer<DynamicBuffer>::value,
+    static_assert(is_dynamic_buffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
     static_assert(is_Body<Body>::value,
         "Body requirements not met");
