@@ -152,6 +152,7 @@
           <bridgehead renderas="sect3">Classes</bridgehead>
           <simplelist type="vert" columns="1">
             <member><link linkend="beast.ref.async_completion">async_completion</link></member>
+            <member><link linkend="beast.ref.async_result">async_result</link></member>
             <member><link linkend="beast.ref.basic_flat_buffer">basic_flat_buffer</link></member>
             <member><link linkend="beast.ref.basic_multi_buffer">basic_multi_buffer</link></member>
             <member><link linkend="beast.ref.buffers_adapter">buffers_adapter</link></member>
