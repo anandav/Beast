@@ -590,8 +590,8 @@ accept_ex(http::header<true, Fields> const& req,
 
 template<class NextLayer>
 template<class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept(AcceptHandler&& handler)
 {
@@ -608,8 +608,8 @@ async_accept(AcceptHandler&& handler)
 
 template<class NextLayer>
 template<class ResponseDecorator, class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept_ex(ResponseDecorator const& decorator,
     AcceptHandler&& handler)
@@ -629,8 +629,8 @@ async_accept_ex(ResponseDecorator const& decorator,
 
 template<class NextLayer>
 template<class ConstBufferSequence, class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept(ConstBufferSequence const& buffers,
     AcceptHandler&& handler)
@@ -652,8 +652,8 @@ async_accept(ConstBufferSequence const& buffers,
 template<class NextLayer>
 template<class ConstBufferSequence,
     class ResponseDecorator, class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept_ex(ConstBufferSequence const& buffers,
     ResponseDecorator const& decorator,
@@ -677,8 +677,8 @@ async_accept_ex(ConstBufferSequence const& buffers,
 
 template<class NextLayer>
 template<class Fields, class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept(http::header<true, Fields> const& req,
     AcceptHandler&& handler)
@@ -698,8 +698,8 @@ async_accept(http::header<true, Fields> const& req,
 template<class NextLayer>
 template<class Fields,
     class ResponseDecorator, class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept_ex(http::header<true, Fields> const& req,
     ResponseDecorator const& decorator, AcceptHandler&& handler)
@@ -722,8 +722,8 @@ async_accept_ex(http::header<true, Fields> const& req,
 template<class NextLayer>
 template<class Fields,
     class ConstBufferSequence, class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept(http::header<true, Fields> const& req,
     ConstBufferSequence const& buffers,
@@ -747,8 +747,8 @@ async_accept(http::header<true, Fields> const& req,
 template<class NextLayer>
 template<class Fields, class ConstBufferSequence,
     class ResponseDecorator, class AcceptHandler>
-typename async_completion<AcceptHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    AcceptHandler, void(error_code))
 stream<NextLayer>::
 async_accept_ex(http::header<true, Fields> const& req,
     ConstBufferSequence const& buffers,

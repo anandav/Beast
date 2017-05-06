@@ -10,12 +10,68 @@
 
 #include <beast/config.hpp>
 #include <beast/core/handler_concepts.hpp>
+#include <beast/core/detail/type_traits.hpp>
 #include <boost/asio/async_result.hpp>
 #include <boost/asio/handler_type.hpp>
 #include <type_traits>
 #include <utility>
 
+//------------------------------------------------------------------------------
+
 namespace beast {
+
+/** An interface for customising the behaviour of an initiating function.
+
+    The async_result class is used for determining:
+    
+    @li the concrete completion handler type to be called at the end of the
+    asynchronous operation;
+    
+    @li the initiating function return type; and
+    
+    @li how the return value of the initiating function is obtained.
+    
+    The trait allows the handler and return types to be determined at the point
+    where the specific completion handler signature is known.
+
+    This template takes advantage of specializations of both
+    `boost::asio_async_result` and `boost::asio::handler_type` for user-defined
+    completion token types. The primary template assumes that the
+    @b CompletionToken is the completion handler.
+*/
+template<class CompletionToken, class Signature>
+class async_result
+{
+    static_assert(! std::is_reference<CompletionToken>::value, "");
+
+public:
+    async_result(async_result const&) = delete;
+    async_result& operator=(async_result const&) = delete;
+
+    using completion_handler_type =
+        typename boost::asio::handler_type<
+            CompletionToken, Signature>::type;
+
+    using return_type =
+        typename boost::asio::async_result<
+            completion_handler_type>::type;
+
+    explicit
+    async_result(completion_handler_type& h)
+        : impl_(h)
+    {
+    }
+
+    return_type
+    get()
+    {
+        return impl_.get();
+    }
+
+private:
+    boost::asio::async_result<
+        completion_handler_type> impl_;
+};
 
 /** Helper for customizing the return type of asynchronous initiation functions.
 
@@ -82,6 +138,11 @@ struct async_completion
     /// The return value of the asynchronous initiation function.
     boost::asio::async_result<handler_type> result;
 };
+
+#define BEAST_INITFN_RESULT_TYPE(ct, sig) \
+    typename async_completion<ct, sig>::result_type
+    //typename async_result< \
+        //typename std::decay<ct>::type, sig>::type
 
 } // beast
 

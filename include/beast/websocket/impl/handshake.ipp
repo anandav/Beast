@@ -160,8 +160,8 @@ operator()(error_code ec, bool again)
 
 template<class NextLayer>
 template<class HandshakeHandler>
-typename async_completion<HandshakeHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    HandshakeHandler, void(error_code))
 stream<NextLayer>::
 async_handshake(string_view const& host,
     string_view const& target,
@@ -179,8 +179,8 @@ async_handshake(string_view const& host,
 
 template<class NextLayer>
 template<class HandshakeHandler>
-typename async_completion<HandshakeHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    HandshakeHandler, void(error_code))
 stream<NextLayer>::
 async_handshake(response_type& res,
     string_view const& host,
@@ -199,8 +199,8 @@ async_handshake(response_type& res,
 
 template<class NextLayer>
 template<class RequestDecorator, class HandshakeHandler>
-typename async_completion<HandshakeHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    HandshakeHandler, void(error_code))
 stream<NextLayer>::
 async_handshake_ex(string_view const& host,
     string_view const& target,
@@ -222,8 +222,8 @@ async_handshake_ex(string_view const& host,
 
 template<class NextLayer>
 template<class RequestDecorator, class HandshakeHandler>
-typename async_completion<HandshakeHandler,
-    void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    HandshakeHandler, void(error_code))
 stream<NextLayer>::
 async_handshake_ex(response_type& res,
     string_view const& host,

@@ -686,8 +686,8 @@ upcall:
 
 template<class NextLayer>
 template<class DynamicBuffer, class ReadHandler>
-typename async_completion<
-    ReadHandler, void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    ReadHandler, void(error_code))
 stream<NextLayer>::
 async_read_frame(frame_info& fi,
     DynamicBuffer& dynabuf, ReadHandler&& handler)
@@ -1097,8 +1097,8 @@ upcall:
 
 template<class NextLayer>
 template<class DynamicBuffer, class ReadHandler>
-typename async_completion<
-    ReadHandler, void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    ReadHandler, void(error_code))
 stream<NextLayer>::
 async_read(opcode& op,
     DynamicBuffer& dynabuf, ReadHandler&& handler)

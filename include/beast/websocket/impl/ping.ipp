@@ -195,8 +195,8 @@ upcall:
 
 template<class NextLayer>
 template<class WriteHandler>
-typename async_completion<
-    WriteHandler, void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    WriteHandler, void(error_code))
 stream<NextLayer>::
 async_ping(ping_data const& payload, WriteHandler&& handler)
 {
@@ -213,8 +213,8 @@ async_ping(ping_data const& payload, WriteHandler&& handler)
 
 template<class NextLayer>
 template<class WriteHandler>
-typename async_completion<
-    WriteHandler, void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    WriteHandler, void(error_code))
 stream<NextLayer>::
 async_pong(ping_data const& payload, WriteHandler&& handler)
 {

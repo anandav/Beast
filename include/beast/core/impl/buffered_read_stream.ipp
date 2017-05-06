@@ -161,9 +161,8 @@ template<class ConstBufferSequence, class WriteHandler>
 auto
 buffered_read_stream<Stream, DynamicBuffer>::
 async_write_some(ConstBufferSequence const& buffers,
-    WriteHandler&& handler) ->
-        typename async_completion<
-            WriteHandler, void(error_code)>::result_type
+        WriteHandler&& handler) ->
+    BEAST_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
 {
     static_assert(is_AsyncWriteStream<next_layer_type>::value,
         "AsyncWriteStream requirements not met");
@@ -229,11 +228,9 @@ template<class Stream, class DynamicBuffer>
 template<class MutableBufferSequence, class ReadHandler>
 auto
 buffered_read_stream<Stream, DynamicBuffer>::
-async_read_some(
-    MutableBufferSequence const& buffers,
+async_read_some(MutableBufferSequence const& buffers,
         ReadHandler&& handler) ->
-            typename async_completion<
-                ReadHandler, void(error_code)>::result_type
+    BEAST_INITFN_RESULT_TYPE(ReadHandler, void(error_code))
 {
     static_assert(is_AsyncReadStream<next_layer_type>::value,
         "Stream requirements not met");

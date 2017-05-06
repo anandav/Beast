@@ -545,8 +545,8 @@ upcall:
 
 template<class NextLayer>
 template<class ConstBufferSequence, class WriteHandler>
-typename async_completion<
-    WriteHandler, void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    WriteHandler, void(error_code))
 stream<NextLayer>::
 async_write_frame(bool fin,
     ConstBufferSequence const& bs, WriteHandler&& handler)
@@ -896,8 +896,8 @@ operator()(error_code ec, bool again)
 
 template<class NextLayer>
 template<class ConstBufferSequence, class WriteHandler>
-typename async_completion<
-    WriteHandler, void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    WriteHandler, void(error_code))
 stream<NextLayer>::
 async_write(ConstBufferSequence const& bs, WriteHandler&& handler)
 {

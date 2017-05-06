@@ -197,8 +197,8 @@ upcall:
 
 template<class NextLayer>
 template<class CloseHandler>
-typename async_completion<
-    CloseHandler, void(error_code)>::result_type
+BEAST_INITFN_RESULT_TYPE(
+    CloseHandler, void(error_code))
 stream<NextLayer>::
 async_close(close_reason const& cr, CloseHandler&& handler)
 {

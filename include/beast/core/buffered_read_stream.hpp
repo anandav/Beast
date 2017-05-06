@@ -272,11 +272,7 @@ public:
         manner equivalent to using `boost::asio::io_service::post`.
     */
     template<class MutableBufferSequence, class ReadHandler>
-#if BEAST_DOXYGEN
-    void_or_deduced
-#else
-    typename async_completion<ReadHandler, void(error_code)>::result_type
-#endif
+    BEAST_INITFN_RESULT_TYPE(ReadHandler, void(error_code))
     async_read_some(MutableBufferSequence const& buffers,
         ReadHandler&& handler);
 
@@ -347,11 +343,7 @@ public:
         manner equivalent to using `boost::asio::io_service::post`.
     */
     template<class ConstBufferSequence, class WriteHandler>
-#if BEAST_DOXYGEN
-    void_or_deduced
-#else
-    typename async_completion<WriteHandler, void(error_code)>::result_type
-#endif
+    BEAST_INITFN_RESULT_TYPE(WriteHandler, void(error_code))
     async_write_some(ConstBufferSequence const& buffers,
         WriteHandler&& handler);
 };
