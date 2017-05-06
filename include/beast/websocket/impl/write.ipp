@@ -558,11 +558,11 @@ async_write_frame(bool fin,
             "ConstBufferSequence requirements not met");
     beast::async_completion<
         WriteHandler, void(error_code)
-            > completion{handler};
+            > init{handler};
     write_frame_op<ConstBufferSequence, decltype(
-        completion.handler)>{completion.handler,
+        init.handler)>{init.handler,
             *this, fin, bs};
-    return completion.result.get();
+    return init.result.get();
 }
 
 template<class NextLayer>
@@ -907,10 +907,10 @@ async_write(ConstBufferSequence const& bs, WriteHandler&& handler)
         ConstBufferSequence>::value,
             "ConstBufferSequence requirements not met");
     beast::async_completion<
-        WriteHandler, void(error_code)> completion{handler};
-    write_op<ConstBufferSequence, decltype(completion.handler)>{
-        completion.handler, *this, bs};
-    return completion.result.get();
+        WriteHandler, void(error_code)> init{handler};
+    write_op<ConstBufferSequence, decltype(init.handler)>{
+        init.handler, *this, bs};
+    return init.result.get();
 }
 
 template<class NextLayer>

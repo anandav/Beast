@@ -170,11 +170,11 @@ async_handshake(string_view const& host,
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements not met");
     beast::async_completion<HandshakeHandler,
-        void(error_code)> completion{handler};
-    handshake_op<decltype(completion.handler)>{
-        completion.handler, *this, nullptr,
+        void(error_code)> init{handler};
+    handshake_op<decltype(init.handler)>{
+        init.handler, *this, nullptr,
             host, target, &default_decorate_req};
-    return completion.result.get();
+    return init.result.get();
 }
 
 template<class NextLayer>
@@ -190,11 +190,11 @@ async_handshake(response_type& res,
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements not met");
     beast::async_completion<HandshakeHandler,
-        void(error_code)> completion{handler};
-    handshake_op<decltype(completion.handler)>{
-        completion.handler, *this, &res,
+        void(error_code)> init{handler};
+    handshake_op<decltype(init.handler)>{
+        init.handler, *this, &res,
             host, target, &default_decorate_req};
-    return completion.result.get();
+    return init.result.get();
 }
 
 template<class NextLayer>
@@ -213,11 +213,11 @@ async_handshake_ex(string_view const& host,
             RequestDecorator>::value,
         "RequestDecorator requirements not met");
     beast::async_completion<HandshakeHandler,
-        void(error_code)> completion{handler};
-    handshake_op<decltype(completion.handler)>{
-        completion.handler, *this, nullptr,
+        void(error_code)> init{handler};
+    handshake_op<decltype(init.handler)>{
+        init.handler, *this, nullptr,
             host, target, decorator};
-    return completion.result.get();
+    return init.result.get();
 }
 
 template<class NextLayer>
@@ -237,11 +237,11 @@ async_handshake_ex(response_type& res,
             RequestDecorator>::value,
         "RequestDecorator requirements not met");
     beast::async_completion<HandshakeHandler,
-        void(error_code)> completion{handler};
-    handshake_op<decltype(completion.handler)>{
-        completion.handler, *this, &res,
+        void(error_code)> init{handler};
+    handshake_op<decltype(init.handler)>{
+        init.handler, *this, &res,
             host, target, decorator};
-    return completion.result.get();
+    return init.result.get();
 }
 
 template<class NextLayer>

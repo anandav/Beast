@@ -206,10 +206,10 @@ async_close(close_reason const& cr, CloseHandler&& handler)
         "AsyncStream requirements not met");
     beast::async_completion<
         CloseHandler, void(error_code)
-            > completion{handler};
-    close_op<decltype(completion.handler)>{
-        completion.handler, *this, cr};
-    return completion.result.get();
+            > init{handler};
+    close_op<decltype(init.handler)>{
+        init.handler, *this, cr};
+    return init.result.get();
 }
 
 template<class NextLayer>

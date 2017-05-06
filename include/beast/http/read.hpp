@@ -9,7 +9,7 @@
 #define BEAST_HTTP_READ_HPP
 
 #include <beast/config.hpp>
-#include <beast/core/async_completion.hpp>
+#include <beast/core/async_result.hpp>
 #include <beast/core/error.hpp>
 #include <beast/http/basic_parser.hpp>
 #include <beast/http/message.hpp>

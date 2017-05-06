@@ -11,7 +11,7 @@
 #include <beast/config.hpp>
 #include <beast/http/message.hpp>
 #include <beast/core/error.hpp>
-#include <beast/core/async_completion.hpp>
+#include <beast/core/async_result.hpp>
 #include <ostream>
 #include <type_traits>
 

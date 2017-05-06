@@ -242,11 +242,11 @@ async_read_some(
             "MutableBufferSequence requirements not met");
     beast::async_completion<
         ReadHandler, void(error_code, std::size_t)
-            > completion{handler};
+            > init{handler};
     read_some_op<MutableBufferSequence,
-        decltype(completion.handler)>{
-            completion.handler, *this, buffers};
-    return completion.result.get();
+        decltype(init.handler)>{
+            init.handler, *this, buffers};
+    return init.result.get();
 }
 
 } // beast

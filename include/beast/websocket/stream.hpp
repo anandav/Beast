@@ -14,7 +14,7 @@
 #include <beast/websocket/detail/stream_base.hpp>
 #include <beast/http/message.hpp>
 #include <beast/http/string_body.hpp>
-#include <beast/core/async_completion.hpp>
+#include <beast/core/async_result.hpp>
 #include <beast/core/buffered_read_stream.hpp>
 #include <beast/core/string_view.hpp>
 #include <beast/core/detail/get_lowest_layer.hpp>

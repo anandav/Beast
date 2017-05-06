@@ -8,7 +8,7 @@
 #ifndef BEAST_TEST_STRING_ISTREAM_HPP
 #define BEAST_TEST_STRING_ISTREAM_HPP
 
-#include <beast/core/async_completion.hpp>
+#include <beast/core/async_result.hpp>
 #include <beast/core/bind_handler.hpp>
 #include <beast/core/error.hpp>
 #include <beast/core/prepare_buffer.hpp>
@@ -89,10 +89,10 @@ public:
         else
             ec = boost::asio::error::eof;
         async_completion<ReadHandler,
-            void(error_code, std::size_t)> completion{handler};
+            void(error_code, std::size_t)> init{handler};
         ios_.post(bind_handler(
-            completion.handler, ec, n));
-        return completion.result.get();
+            init.handler, ec, n));
+        return init.result.get();
     }
 
     template<class ConstBufferSequence>
@@ -121,10 +121,10 @@ public:
         WriteHandler&& handler)
     {
         async_completion<WriteHandler,
-            void(error_code, std::size_t)> completion{handler};
-        ios_.post(bind_handler(completion.handler,
+            void(error_code, std::size_t)> init{handler};
+        ios_.post(bind_handler(init.handler,
             error_code{}, boost::asio::buffer_size(buffers)));
-        return completion.result.get();
+        return init.result.get();
     }
 
     friend
