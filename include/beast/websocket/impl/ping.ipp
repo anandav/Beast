@@ -202,12 +202,11 @@ async_ping(ping_data const& payload, WriteHandler&& handler)
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements requirements not met");
-    beast::async_completion<
-        WriteHandler, void(error_code)
-            > init{handler};
-    ping_op<decltype(init.handler)>{
-        init.handler, *this,
-            opcode::ping, payload};
+    async_completion<WriteHandler,
+        void(error_code)> init{handler};
+    ping_op<BEAST_HANDLER_TYPE(
+        WriteHandler, void(error_code))>{
+            init.handler, *this, opcode::ping, payload};
     return init.result.get();
 }
 
@@ -220,12 +219,11 @@ async_pong(ping_data const& payload, WriteHandler&& handler)
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements requirements not met");
-    beast::async_completion<
-        WriteHandler, void(error_code)
-            > init{handler};
-    ping_op<decltype(init.handler)>{
-        init.handler, *this,
-            opcode::pong, payload};
+    async_completion<WriteHandler,
+        void(error_code)> init{handler};
+    ping_op<BEAST_HANDLER_TYPE(
+        WriteHandler, void(error_code))>{
+            init.handler, *this, opcode::pong, payload};
     return init.result.get();
 }
 

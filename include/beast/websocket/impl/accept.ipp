@@ -597,12 +597,12 @@ async_accept(AcceptHandler&& handler)
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
     accept_op<decltype(&default_decorate_res),
-        decltype(init.handler)>{init.handler,
-            *this, &default_decorate_res};
+        BEAST_HANDLER_TYPE(AcceptHandler, void(error_code))>{
+            init.handler, *this, &default_decorate_res};
     return init.result.get();
 }
 
@@ -619,11 +619,12 @@ async_accept_ex(ResponseDecorator const& decorator,
     static_assert(detail::is_ResponseDecorator<
         ResponseDecorator>::value,
             "ResponseDecorator requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
-    accept_op<ResponseDecorator, decltype(init.handler)>{
-        init.handler, *this, decorator};
+    accept_op<ResponseDecorator, BEAST_HANDLER_TYPE(
+        AcceptHandler, void(error_code))>{
+            init.handler, *this, decorator};
     return init.result.get();
 }
 
@@ -640,12 +641,12 @@ async_accept(ConstBufferSequence const& buffers,
     static_assert(is_ConstBufferSequence<
         ConstBufferSequence>::value,
             "ConstBufferSequence requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
     accept_op<decltype(&default_decorate_res),
-        decltype(init.handler)>{init.handler,
-        *this, buffers, &default_decorate_res};
+        BEAST_HANDLER_TYPE(AcceptHandler, void(error_code))>{
+            init.handler, *this, buffers, &default_decorate_res};
     return init.result.get();
 }
 
@@ -667,11 +668,12 @@ async_accept_ex(ConstBufferSequence const& buffers,
     static_assert(detail::is_ResponseDecorator<
         ResponseDecorator>::value,
             "ResponseDecorator requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
-    accept_op<ResponseDecorator, decltype(init.handler)>{
-        init.handler, *this, buffers, decorator};
+    accept_op<ResponseDecorator, BEAST_HANDLER_TYPE(
+        AcceptHandler, void(error_code))>{
+            init.handler, *this, buffers, decorator};
     return init.result.get();
 }
 
@@ -685,13 +687,14 @@ async_accept(http::header<true, Fields> const& req,
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
-    response_op<decltype(init.handler)>{
-        init.handler, *this, req,
-            &default_decorate_res, beast_asio_helpers::
-                is_continuation(init.handler)};
+    response_op<BEAST_HANDLER_TYPE(
+        AcceptHandler, void(error_code))>{init.handler,
+            *this, req, &default_decorate_res,
+                beast_asio_helpers::is_continuation(
+                    init.handler)};
     return init.result.get();
 }
 
@@ -709,13 +712,14 @@ async_accept_ex(http::header<true, Fields> const& req,
     static_assert(detail::is_ResponseDecorator<
         ResponseDecorator>::value,
             "ResponseDecorator requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
-    response_op<decltype(init.handler)>{
-        init.handler, *this, req, decorator,
-            beast_asio_helpers::is_continuation(
-                init.handler)};
+    response_op<BEAST_HANDLER_TYPE(
+        AcceptHandler, void(error_code))>{
+            init.handler, *this, req, decorator,
+                beast_asio_helpers::is_continuation(
+                    init.handler)};
     return init.result.get();
 }
 
@@ -734,12 +738,13 @@ async_accept(http::header<true, Fields> const& req,
     static_assert(is_ConstBufferSequence<
         ConstBufferSequence>::value,
             "ConstBufferSequence requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
-    response_op<decltype(init.handler)>{
-        init.handler, *this, req, buffers,
-            &default_decorate_res, beast_asio_helpers::
+    response_op<BEAST_HANDLER_TYPE(
+        AcceptHandler, void(error_code))>{
+            init.handler, *this, req, buffers,
+                &default_decorate_res, beast_asio_helpers::
                     is_continuation(init.handler)};
     return init.result.get();
 }
@@ -763,13 +768,14 @@ async_accept_ex(http::header<true, Fields> const& req,
     static_assert(detail::is_ResponseDecorator<
         ResponseDecorator>::value,
             "ResponseDecorator requirements not met");
-    beast::async_completion<AcceptHandler,
+    async_completion<AcceptHandler,
         void(error_code)> init{handler};
     reset();
-    response_op<decltype(init.handler)>{
-        init.handler, *this, req, buffers, decorator,
-            beast_asio_helpers::is_continuation(
-                init.handler)};
+    response_op<BEAST_HANDLER_TYPE(
+        AcceptHandler, void(error_code))>{init.handler,
+            *this, req, buffers, decorator,
+                beast_asio_helpers::is_continuation(
+                    init.handler)};
     return init.result.get();
 }
 

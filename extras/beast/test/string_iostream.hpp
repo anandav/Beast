@@ -131,9 +131,8 @@ public:
     {
         error_code ec;
         auto const bytes_transferred = write_some(buffers, ec);
-        async_completion<
-            WriteHandler, void(error_code, std::size_t)
-                > init{handler};
+        async_completion<WriteHandler,
+            void(error_code, std::size_t)> init{handler};
         get_io_service().post(
             bind_handler(init.handler, ec, bytes_transferred));
         return init.result.get();

@@ -111,9 +111,8 @@ public:
         error_code ec;
         if(pfc_->fail(ec))
         {
-            async_completion<
-                ReadHandler, void(error_code, std::size_t)
-                    > init{handler};
+            async_completion<ReadHandler,
+                void(error_code, std::size_t)> init{handler};
             next_layer_.get_io_service().post(
                 bind_handler(init.handler, ec, 0));
             return init.result.get();
@@ -148,9 +147,8 @@ public:
         error_code ec;
         if(pfc_->fail(ec))
         {
-            async_completion<
-                WriteHandler, void(error_code, std::size_t)
-                    > init{handler};
+            async_completion<WriteHandler,
+                void(error_code, std::size_t)> init{handler};
             next_layer_.get_io_service().post(
                 bind_handler(init.handler, ec, 0));
             return init.result.get();

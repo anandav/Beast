@@ -696,10 +696,11 @@ async_read_frame(frame_info& fi,
         "AsyncStream requirements requirements not met");
     static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
-    beast::async_completion<
-        ReadHandler, void(error_code)> init{handler};
-    read_frame_op<DynamicBuffer, decltype(init.handler)>{
-        init.handler, *this, fi, dynabuf};
+    async_completion<ReadHandler,
+        void(error_code)> init{handler};
+    read_frame_op<DynamicBuffer, BEAST_HANDLER_TYPE(
+        ReadHandler, void(error_code))>{init.handler,
+            *this, fi, dynabuf};
     return init.result.get();
 }
 
@@ -1107,11 +1108,11 @@ async_read(opcode& op,
         "AsyncStream requirements requirements not met");
     static_assert(beast::is_DynamicBuffer<DynamicBuffer>::value,
         "DynamicBuffer requirements not met");
-    beast::async_completion<
-        ReadHandler, void(error_code)
-            > init{handler};
-    read_op<DynamicBuffer, decltype(init.handler)>{
-        init.handler, *this, op, dynabuf};
+    async_completion<ReadHandler,
+        void(error_code)> init{handler};
+    read_op<DynamicBuffer, BEAST_HANDLER_TYPE(
+        ReadHandler, void(error_code))>{init.handler,
+            *this, op, dynabuf};
     return init.result.get();
 }
 

@@ -204,11 +204,11 @@ async_close(close_reason const& cr, CloseHandler&& handler)
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements not met");
-    beast::async_completion<
-        CloseHandler, void(error_code)
-            > init{handler};
-    close_op<decltype(init.handler)>{
-        init.handler, *this, cr};
+    async_completion<CloseHandler,
+        void(error_code)> init{handler};
+    close_op<BEAST_HANDLER_TYPE(
+        CloseHandler, void(error_code))>{
+            init.handler, *this, cr};
     return init.result.get();
 }
 

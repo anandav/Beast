@@ -556,11 +556,10 @@ async_write_frame(bool fin,
     static_assert(beast::is_ConstBufferSequence<
         ConstBufferSequence>::value,
             "ConstBufferSequence requirements not met");
-    beast::async_completion<
-        WriteHandler, void(error_code)
-            > init{handler};
-    write_frame_op<ConstBufferSequence, decltype(
-        init.handler)>{init.handler,
+    async_completion<WriteHandler,
+        void(error_code)> init{handler};
+    write_frame_op<ConstBufferSequence, BEAST_HANDLER_TYPE(
+        WriteHandler, void(error_code))>{init.handler,
             *this, fin, bs};
     return init.result.get();
 }
@@ -906,10 +905,11 @@ async_write(ConstBufferSequence const& bs, WriteHandler&& handler)
     static_assert(beast::is_ConstBufferSequence<
         ConstBufferSequence>::value,
             "ConstBufferSequence requirements not met");
-    beast::async_completion<
-        WriteHandler, void(error_code)> init{handler};
-    write_op<ConstBufferSequence, decltype(init.handler)>{
-        init.handler, *this, bs};
+    async_completion<WriteHandler,
+        void(error_code)> init{handler};
+    write_op<ConstBufferSequence, BEAST_HANDLER_TYPE(
+        WriteHandler, void(error_code))>{
+            init.handler, *this, bs};
     return init.result.get();
 }
 

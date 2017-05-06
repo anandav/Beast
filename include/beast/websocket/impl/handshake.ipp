@@ -169,11 +169,12 @@ async_handshake(string_view const& host,
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements not met");
-    beast::async_completion<HandshakeHandler,
+    async_completion<HandshakeHandler,
         void(error_code)> init{handler};
-    handshake_op<decltype(init.handler)>{
-        init.handler, *this, nullptr,
-            host, target, &default_decorate_req};
+    handshake_op<BEAST_HANDLER_TYPE(
+        HandshakeHandler, void(error_code))>{
+            init.handler, *this, nullptr, host,
+                target, &default_decorate_req};
     return init.result.get();
 }
 
@@ -189,11 +190,12 @@ async_handshake(response_type& res,
 {
     static_assert(is_AsyncStream<next_layer_type>::value,
         "AsyncStream requirements not met");
-    beast::async_completion<HandshakeHandler,
+    async_completion<HandshakeHandler,
         void(error_code)> init{handler};
-    handshake_op<decltype(init.handler)>{
-        init.handler, *this, &res,
-            host, target, &default_decorate_req};
+    handshake_op<BEAST_HANDLER_TYPE(
+        HandshakeHandler, void(error_code))>{
+            init.handler, *this, &res, host,
+                target, &default_decorate_req};
     return init.result.get();
 }
 
@@ -212,11 +214,12 @@ async_handshake_ex(string_view const& host,
     static_assert(detail::is_RequestDecorator<
             RequestDecorator>::value,
         "RequestDecorator requirements not met");
-    beast::async_completion<HandshakeHandler,
+    async_completion<HandshakeHandler,
         void(error_code)> init{handler};
-    handshake_op<decltype(init.handler)>{
-        init.handler, *this, nullptr,
-            host, target, decorator};
+    handshake_op<BEAST_HANDLER_TYPE(
+        HandshakeHandler, void(error_code))>{
+            init.handler, *this, nullptr, host,
+                target, decorator};
     return init.result.get();
 }
 
@@ -236,11 +239,12 @@ async_handshake_ex(response_type& res,
     static_assert(detail::is_RequestDecorator<
             RequestDecorator>::value,
         "RequestDecorator requirements not met");
-    beast::async_completion<HandshakeHandler,
+    async_completion<HandshakeHandler,
         void(error_code)> init{handler};
-    handshake_op<decltype(init.handler)>{
-        init.handler, *this, &res,
-            host, target, decorator};
+    handshake_op<BEAST_HANDLER_TYPE(
+        HandshakeHandler, void(error_code))>{
+            init.handler, *this, &res, host,
+                target, decorator};
     return init.result.get();
 }
 

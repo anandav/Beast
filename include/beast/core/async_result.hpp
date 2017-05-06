@@ -38,11 +38,18 @@ namespace beast {
     `boost::asio_async_result` and `boost::asio::handler_type` for user-defined
     completion token types. The primary template assumes that the
     @b CompletionToken is the completion handler.
+
+    @see @ref BEAST_INITFN_RESULT_TYPE, @ref BEAST_HANDLER_TYPE
 */
 template<class CompletionToken, class Signature>
 class async_result
 {
-    static_assert(! std::is_reference<CompletionToken>::value, "");
+    static_assert(! std::is_reference<
+        CompletionToken>::value, "");
+
+    boost::asio::async_result<typename
+        boost::asio::handler_type<CompletionToken,
+            Signature>::type> impl_;
 
 public:
     async_result(async_result const&) = delete;
@@ -67,10 +74,6 @@ public:
     {
         return impl_.get();
     }
-
-private:
-    boost::asio::async_result<
-        completion_handler_type> impl_;
 };
 
 /** Helper for customizing the return type of asynchronous initiation functions.
@@ -139,10 +142,23 @@ struct async_completion
     boost::asio::async_result<handler_type> result;
 };
 
+/// @file
+
+/** @def BEAST_INITFN_RESULT_TYPE(ct, sig)
+
+    A macro to customize the return value of asynchronous initiation functions.
+*/
 #define BEAST_INITFN_RESULT_TYPE(ct, sig) \
-    typename async_completion<ct, sig>::result_type
-    //typename async_result< \
-        //typename std::decay<ct>::type, sig>::type
+    typename async_result< \
+        typename std::decay<ct>::type, sig>::return_type
+
+/** @def BEAST_HANDLER_TYPE(ct, sig)
+
+    A helper macro to convert a completion token to a completion handler type.
+*/
+#define BEAST_HANDLER_TYPE(ct, sig) \
+    typename async_result< \
+        typename std::decay<ct>::type, sig>::completion_handler_type
 
 } // beast
 

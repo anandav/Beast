@@ -221,7 +221,7 @@ async_write(AsyncWriteStream& stream,
 {
     static_assert(is_AsyncWriteStream<AsyncWriteStream>::value,
         "AsyncWriteStream requirements not met");
-    beast::async_completion<WriteHandler,
+    async_completion<WriteHandler,
         void(error_code)> init{handler};
     multi_buffer b;
     {
@@ -231,7 +231,7 @@ async_write(AsyncWriteStream& stream,
         os << "\r\n";
     }
     detail::write_streambuf_op<AsyncWriteStream,
-        decltype(init.handler)>{
+        BEAST_HANDLER_TYPE(WriteHandler, void(error_code))>{
             init.handler, stream, std::move(b)};
     return init.result.get();
 }
@@ -656,10 +656,11 @@ async_write(AsyncWriteStream& stream,
     static_assert(is_Writer<typename Body::writer,
         message<isRequest, Body, Fields>>::value,
             "Writer requirements not met");
-    beast::async_completion<WriteHandler,
+    async_completion<WriteHandler,
         void(error_code)> init{handler};
-    detail::write_op<AsyncWriteStream, decltype(init.handler),
-        isRequest, Body, Fields>{init.handler, stream, msg};
+    detail::write_op<AsyncWriteStream, BEAST_HANDLER_TYPE(
+        WriteHandler, void(error_code)), isRequest,
+            Body, Fields>{init.handler, stream, msg};
     return init.result.get();
 }
 
