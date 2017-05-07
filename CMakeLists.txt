@@ -33,7 +33,7 @@ else()
     find_package(Threads)
 
     set(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -Wpedantic -Wno-unused-parameter")
+      "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Wno-unused-parameter")
 endif()
 
 #-------------------------------------------------------------------------------
@@ -114,20 +114,30 @@ if ("${VARIANT}" STREQUAL "coverage")
       "${CMAKE_CXX_FLAGS} -fprofile-arcs -ftest-coverage")
     set(CMAKE_BUILD_TYPE RELWITHDEBINFO)
     set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -lgcov")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 elseif ("${VARIANT}" STREQUAL "asan")
     set(CMAKE_CXX_FLAGS
       "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer")
     set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
     set(CMAKE_BUILD_TYPE RELWITHDEBINFO)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
+
 elseif ("${VARIANT}" STREQUAL "usan")
     set(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -fsanitize=undefined -fno-omit-frame-pointer")
+      "${CMAKE_CXX_FLAGS} -fsanitize=undefined -fsanitize-blacklist=${PROJECT_SOURCE_DIR}/scripts/usan.supp -fno-omit-frame-pointer")
     set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=undefined")
     set(CMAKE_BUILD_TYPE RELWITHDEBINFO)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+
 elseif ("${VARIANT}" STREQUAL "debug")
     set(CMAKE_BUILD_TYPE DEBUG)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 elseif ("${VARIANT}" STREQUAL "release")
     set(CMAKE_BUILD_TYPE RELEASE)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
 endif()
 
 include_directories (extras)
@@ -168,7 +178,7 @@ file(GLOB_RECURSE EXTRAS_INCLUDES
 
 add_subdirectory (examples)
 if (NOT OPENSSL_FOUND)
-    message("OpenSSL not found. Not building examples/ssl")
+    message("OpenSSL not found. Not building SSL tests and examples")
 else()
     add_subdirectory (examples/ssl)
 endif()
