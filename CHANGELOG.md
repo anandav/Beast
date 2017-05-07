@@ -1,6 +1,7 @@
 1.0.0-b39
 
 * Use beast::string_view alias
+* Use c++14, c++17 flags
 
 HTTP
 
